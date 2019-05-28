@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +10,51 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+p {
+  font-family: "Roboto";
+  font-size:14px;
+  margin:15px;
+}
+
+#title {
+  font-family: 'Lora', serif;
+  font-size:25px;
+
+  float:left;
+}
+
+.subtitle {
+  font-family: 'Lora', serif;
+  font-size:16px;
+  color:grey
+}
+
+.heading {
+  font-family: 'Lora', serif;
+  font-size:16px;
+}
+
+#timer {
+  font-family: 'Lora', serif;
+
+  float:right;
+}
+
+.pending {
+  color:grey;
+  font-weight: bold;
+
+}
+
+.success {
+  color:green;
+  font-weight: bold;
+
+}
+.failure {
+  color:red;
+  font-weight: bold;
+
 }
