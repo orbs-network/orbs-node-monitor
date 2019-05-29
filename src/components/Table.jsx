@@ -209,7 +209,7 @@ class SimpleTable extends React.Component {
                     <TableRow>
                         <TableCell>Metric Name</TableCell>
                         <TableCell align="right">Data</TableCell>
-                        <TableCell align="right">Success Threshold</TableCell>
+                        <TableCell align="right">Success Condition</TableCell>
                         <TableCell align="right">Status</TableCell>
                     </TableRow>
                 </TableHead>
@@ -243,7 +243,7 @@ class SimpleTable extends React.Component {
                     <TableRow>
                         <TableCell align="left">Runtime.Uptime.Seconds</TableCell>
                         <TableCell align="right">{this.state.runtime_uptime[0]}</TableCell>
-                        <TableCell align="right">previous data + 55 &lt;&eq; data</TableCell>
+                        <TableCell align="right">previous data + 55 &lt;= data</TableCell>
                         <TableCell align="right">
                             {this.state.runtime_uptime[1] !== "pending" ? 
                                 this.state.runtime_uptime[1] === "success" ? <Chip color="primary" label="success"/> : <Chip color="secondary" label="failure" /> :
