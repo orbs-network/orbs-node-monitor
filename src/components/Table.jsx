@@ -114,7 +114,7 @@ class SimpleTable extends React.Component {
                 node_address:data["Node.Address"].Value,
                 version_commit:[data["Version.Commit"].Value,prevState.version_commit[1]],
                 version_semanitc:[data["Version.Semantic"].Value,prevState.version_semanitc[1]],
-                runtime_uptime:[data["Runtime.Uptime.Seconds"].Value, (data["Runtime.Uptime.Seconds"].Value >= prevState.runtime_uptime[0] + 55 && data["Runtime.Uptime.Seconds"].Value < prevState.runtime_uptime[0] + 65)  ? "success" : "failure"],
+                runtime_uptime:[data["Runtime.Uptime.Seconds"].Value, data["Runtime.Uptime.Seconds"].Value >= prevState.runtime_uptime[0] + 55  ? "success" : "failure"],
                 block_height:[data["BlockStorage.BlockHeight"].Value, data["BlockStorage.BlockHeight"].Value >= prevState.block_height[0] + 1 ? "success" : "failure"],
                 num_keys:[data["StateStoragePersistence.TotalNumberOfKeys.Count"].Value,data["StateStoragePersistence.TotalNumberOfKeys.Count"].Value >= prevState.num_keys[0] ? "success" : "failure"],
                 eth_lastBlock:[data["Ethereum.Node.LastBlock"].Value,data["Ethereum.Node.LastBlock"].Value >= prevState.eth_lastBlock[0] + 1 ? "success" : "failure"],
@@ -130,26 +130,30 @@ class SimpleTable extends React.Component {
                 gossip_outConnActive:[data["Gossip.OutgoingConnection.Active.Count"].Value,data["Gossip.OutgoingConnection.Active.Count"].Value < 100 ? "success" : "failure"],
                 gossip_keepAlive:[data["Gossip.OutgoingConnection.KeepaliveErrors.Count"].Value,data["Gossip.OutgoingConnection.KeepaliveErrors.Count"].Value < 100 ? "success" : "failure"],
                 gossip_sendErr:[data["Gossip.OutgoingConnection.SendErrors.Count"].Value,data["Gossip.OutgoingConnection.SendErrors.Count"].Value < 100 ? "success" : "failure"],
-                gossip_sendQueueErr:[data["Gossip.OutgoingConnection.SendQueueErrors.Count"].Value,	data["Gossip.OutgoingConnection.SendQueueErrors.Count"].Value < 100 ? "success" : "failure"]
+                gossip_sendQueueErr:[data["Gossip.OutgoingConnection.SendQueueErrors.Count"].Value,	data["Gossip.OutgoingConnection.SendQueueErrors.Count"].Value < 100 ? "success" : "failure"],
+                overall:"success"
             }));
 
             this.checkVersion();
 
-            this.setState({overall: 
-                Object.keys(this.state).reduce((success, metric) => {
-                    if (metric.isArray) {
-                        success = metric[1] === "success" ? "success" : "failure"
-                        console.log(success)
-                        return success
+            Object.values(this.state).reduce((success, value) => {
+                if (value !== undefined) {
+                    if (Array.isArray(value)) {
+                        if (value[1] === "failure") {
+                            this.setState({overall:"failure"})
+                            return "success"
+                        } else {
+                            return "success"
+                        }
                     } else {
                         return "success"
                     }
-                }) === "success" ? "success" : "failure"
+                } else {
+                    return "success"
+                }
             })
-        })
+         })
     }
-
-    
 
     componentDidMount() {
         this.getInit()
@@ -193,14 +197,14 @@ class SimpleTable extends React.Component {
            
                 <TableHead>
                 <TableRow>
-                    <div><p class="heading">Overall Health:
+                    <p class="heading">Overall Health:
                     {this.state.overall !== "pending" ? 
 
                         this.state.overall === "success" ? <span class="success"> Success </span>: <span class="failure"> Failure</span> :
                         <span class="pending"> Pending </span>
                     }
                     </p>
-                    </div>
+                    
                 </TableRow>
                     <TableRow>
                         <TableCell>Metric Name</TableCell>
@@ -239,7 +243,7 @@ class SimpleTable extends React.Component {
                     <TableRow>
                         <TableCell align="left">Runtime.Uptime.Seconds</TableCell>
                         <TableCell align="right">{this.state.runtime_uptime[0]}</TableCell>
-                        <TableCell align="right">previous data + 55 &lt; data &lt; previous data + 65</TableCell>
+                        <TableCell align="right">previous data + 55 &lt;&eq; data</TableCell>
                         <TableCell align="right">
                             {this.state.runtime_uptime[1] !== "pending" ? 
                                 this.state.runtime_uptime[1] === "success" ? <Chip color="primary" label="success"/> : <Chip color="secondary" label="failure" /> :
