@@ -9,6 +9,7 @@ Currently a PROOF OF CONCEPT: Further developments to be made.
 ### Pre-requisites
 
 - [Yarn package manager](https://yarnpkg.com/en/)
+- [Node.js](https://nodejs.org/en/)
 
 ### Installation
 
