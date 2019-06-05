@@ -10,12 +10,15 @@ import Chip from '@material-ui/core/Chip';
 import Counter from './UpdateTimer';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import nodeData from '../node.json';
 
 class SimpleTable extends React.Component {
     constructor (props) {
         super (props);
         // Init state values default success
         this.state = {
+            org:"",
+            ip:"",
             node_address:"",
             version_commit:["0","success"],
             version_semanitc:["0","success"],
@@ -65,8 +68,8 @@ class SimpleTable extends React.Component {
         })
     }
 
-    getInit() {
-        fetch("http://35.183.240.87/vchains/1100000/metrics", {
+    getInit(ip) {
+        fetch("http://"+ip+"/vchains/1100000/metrics", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -102,7 +105,7 @@ class SimpleTable extends React.Component {
     }
 
     getMetrics() {
-        fetch("http://35.183.240.87/vchains/1100000/metrics", {
+        fetch("http://"+this.state.ip+"/vchains/1100000/metrics", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -156,13 +159,16 @@ class SimpleTable extends React.Component {
     }
 
     componentDidMount() {
-        this.getInit()
+        this.setState({
+            org:nodeData.organization,
+            ip:nodeData.ip
+        })      
+        this.getInit(nodeData.ip)      
         this.checkVersion()
         let metrics_interval = setInterval(this.getMetrics.bind(this), 60000);
-
         this.setState({
             metrics_interval:metrics_interval,
-        });
+        })
     }
 
     render() {
@@ -192,6 +198,7 @@ class SimpleTable extends React.Component {
             <ThemeProvider theme={theme}>
 
             <Paper className={classes.paper}>
+            <p id="title"> Orbs Node Monitor <span class="subtitle"> {this.state.org} </span></p>
             <Counter/>
             <Table className={classes.table} size="small">
            

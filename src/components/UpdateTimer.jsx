@@ -26,7 +26,6 @@ class Counter extends React.Component {
         return (
             <div>
             <span>
-            <p id="title"> Orbs Node Monitor <span class="subtitle">  Stratx Consulting Inc.</span></p>
             <p id="timer">Next update in: {this.state.counter}</p>
             </span>
             </div>
