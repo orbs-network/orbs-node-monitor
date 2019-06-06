@@ -1,4 +1,5 @@
 {
     "organization":"YOUR_ORGANIZATION",
-    "ip":"YOUR_NODE_IP"
+    "ip":"YOUR_NODE_IP",
+    "address":"YOUR_NODE_ADDRESS"
 }

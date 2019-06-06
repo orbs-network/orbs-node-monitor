@@ -19,6 +19,7 @@ class SimpleTable extends React.Component {
         this.state = {
             org:"",
             ip:"",
+            address:"",
             node_address:"",
             version_commit:["0","success"],
             version_semanitc:["0","success"],
@@ -161,7 +162,8 @@ class SimpleTable extends React.Component {
     componentDidMount() {
         this.setState({
             org:nodeData.organization,
-            ip:nodeData.ip
+            ip:nodeData.ip,
+            address:nodeData.address
         })      
         this.getInit(nodeData.ip)      
         this.checkVersion()
@@ -223,9 +225,9 @@ class SimpleTable extends React.Component {
                 <TableBody>
                     <TableRow>
                         <TableCell align="left">Node.Address</TableCell>
-                        <TableCell align="right">{this.state.node_address}</TableCell>
-                        <TableCell align="right">== 8a44e9c662dcf0677d529ef3b000f29a8f741b60</TableCell>
-                        <TableCell align="right">{this.state.node_address === "8a44e9c662dcf0677d529ef3b000f29a8f741b60" ? 
+                        <TableCell align="right">{this.state.address}</TableCell>
+                        <TableCell align="right">== {this.state.node_address}</TableCell>
+                        <TableCell align="right">{this.state.address === this.state.node_address ? 
                             <Chip color="primary" label="success"/> : <Chip color="secondary" label="failure" /> }
                         </TableCell>
                     </TableRow>
